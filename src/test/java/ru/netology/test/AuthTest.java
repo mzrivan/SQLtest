@@ -93,20 +93,20 @@ public class AuthTest {
 
     @AfterAll
     public static void deleteData() throws SQLException {
-        var delTabletTransfer = "DELETE FROM card_transactions;";
-        var delTabletCard = "DELETE FROM cards;";
-        var delTabletCode = "DELETE FROM auth_codes;";
-        var delTabletUser = "DELETE FROM users;";
+        var delTableTransfer = "DELETE FROM card_transactions;";
+        var delTableCard = "DELETE FROM cards;";
+        var delTableCode = "DELETE FROM auth_codes;";
+        var delTableUser = "DELETE FROM users;";
         var runner = new QueryRunner();
         try (
                 var conn = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/app", "app", "pass"
                 );
         ) {
-            runner.update(conn, delTabletTransfer);
-            runner.update(conn, delTabletCard);
-            runner.update(conn, delTabletCode);
-            runner.update(conn, delTabletUser);
+            runner.update(conn, delTableTransfer);
+            runner.update(conn, delTableCard);
+            runner.update(conn, delTableCode);
+            runner.update(conn, delTableUser);
         }
     }
 }
