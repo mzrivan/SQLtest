@@ -2,8 +2,6 @@ package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.github.javafaker.Faker;
-import org.openqa.selenium.Keys;
 import ru.netology.data.User;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -32,7 +30,7 @@ public class LoginPage {
     }
 
     public void loginEmpty(User user) {
-        passwordField.setValue("qwerty123");
+        passwordField.setValue(user.getPassword());
         loginButton.click();
         loginNotification.shouldHave(Condition.text("Поле обязательно для заполнения"))
                 .shouldBe(Condition.visible);

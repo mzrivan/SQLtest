@@ -5,10 +5,9 @@ import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 import ru.netology.data.User;
 
-import java.sql.SQLException;
-
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static ru.netology.data.DBhelper.getVerificationCode;
 
 public class VerificationPage {
     private SelenideElement codeField = $("[data-test-id=code] input");
@@ -20,11 +19,12 @@ public class VerificationPage {
         codeField.shouldBe(visible);
     }
 
-    public void validCodeVerify(User user) throws SQLException {
-        codeField.setValue(DataHelper.getVerificationCode(user));
+    public void validCodeVerify(User user){
+        codeField.setValue(getVerificationCode(user));
         verifyButton.click();
         new DashboardPage();
     }
+
     public void EmptyCodeVerify() {
         verifyButton.click();
         verifyNotification.shouldHave(Condition.text("Поле обязательно для заполнения"))
@@ -38,6 +38,4 @@ public class VerificationPage {
                 .shouldHave(Condition.text("Неверно указан код! Попробуйте ещё раз."))
                 .shouldBe(Condition.visible);
     }
-
-
 }

@@ -1,16 +1,13 @@
 package ru.netology.test;
 
-import org.apache.commons.dbutils.QueryRunner;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.*;
 import ru.netology.page.*;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import static com.codeborne.selenide.Selenide.open;
+import static ru.netology.data.DBhelper.deleteData;
 
 public class AuthTest {
 
@@ -23,9 +20,13 @@ public class AuthTest {
         open("http://localhost:9999");
     }
 
+    @AfterAll
+    static void deleteAllData() {
+        deleteData();
+    }
 
     @Test
-    void shouldAuthorizationValidUserValidCode() throws SQLException {
+    void shouldAuthorizationValidUserValidCode() {
         loginPage = new LoginPage();
         user = DataHelper.getValidUser();
         verificationPage = loginPage.validLogin(user);
@@ -33,7 +34,7 @@ public class AuthTest {
     }
 
     @Test
-    void shouldNotAuthorizationValidUserInValidCode() throws SQLException {
+    void shouldNotAuthorizationValidUserInValidCode() {
         loginPage = new LoginPage();
         user = DataHelper.getValidUser();
         verificationPage = loginPage.validLogin(user);
@@ -41,14 +42,14 @@ public class AuthTest {
     }
 
     @Test
-    void shouldNotAuthorUserInDBwrongPass() throws SQLException{
+    void shouldNotAuthorUserInDBwrongPass() {
         loginPage = new LoginPage();
         user = DataHelper.getUserInDBwrongPass();
         loginPage.invalidLogin(user);
     }
 
     @Test
-    void shouldNotAuthorizationUserInDBwrongLogin() throws SQLException{
+    void shouldNotAuthorizationUserInDBwrongLogin() {
         loginPage = new LoginPage();
         user = DataHelper.getUserInDBwrongLogin();
         loginPage.invalidLogin(user);
@@ -62,21 +63,21 @@ public class AuthTest {
     }
 
     @Test
-    void shouldNotAuthorizationPasswordEmpty() throws SQLException {
+    void shouldNotAuthorizationPasswordEmpty() {
         loginPage = new LoginPage();
         user = DataHelper.getValidUser();
         loginPage.passwordEmpty(user);
     }
 
     @Test
-    void shouldNotAuthorizationLoginEmpty() throws SQLException {
+    void shouldNotAuthorizationLoginEmpty() {
         loginPage = new LoginPage();
         user = DataHelper.getValidUser();
         loginPage.loginEmpty(user);
     }
 
     @Test
-    void shouldNotAuthorizationValidUserInvalidCode() throws SQLException {
+    void shouldNotAuthorizationValidUserInvalidCode() {
         loginPage = new LoginPage();
         user = DataHelper.getValidUser();
         verificationPage = loginPage.validLogin(user);
@@ -84,29 +85,10 @@ public class AuthTest {
     }
 
     @Test
-    void shouldNotAuthorizationValidUserCodeEmpty() throws SQLException {
+    void shouldNotAuthorizationValidUserCodeEmpty() {
         loginPage = new LoginPage();
         user = DataHelper.getValidUser();
         verificationPage = loginPage.validLogin(user);
         verificationPage.EmptyCodeVerify();
-    }
-
-    @AfterAll
-    public static void deleteData() throws SQLException {
-        var delTableTransfer = "DELETE FROM card_transactions;";
-        var delTableCard = "DELETE FROM cards;";
-        var delTableCode = "DELETE FROM auth_codes;";
-        var delTableUser = "DELETE FROM users;";
-        var runner = new QueryRunner();
-        try (
-                var conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "pass"
-                );
-        ) {
-            runner.update(conn, delTableTransfer);
-            runner.update(conn, delTableCard);
-            runner.update(conn, delTableCode);
-            runner.update(conn, delTableUser);
-        }
     }
 }
