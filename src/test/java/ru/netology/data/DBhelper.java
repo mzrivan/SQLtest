@@ -29,7 +29,7 @@ public class DBhelper {
         }
     }
 
-    public static void queryUpdate(String sql, String[] object){
+    public static void queryUpdate(String sql, String[] object) {
         var runner = new QueryRunner();
         try (Connection conn = getConnection()) {
             runner.update(conn, sql, object[0], object[1], object[2], object[3]);
@@ -38,7 +38,7 @@ public class DBhelper {
         }
     }
 
-    public static String getVerificationCode(User user){
+    public static String getVerificationCode(User user) {
         var sql = "SELECT code FROM auth_codes WHERE user_id = ?";
         var runner = new QueryRunner();
         String code = null;
@@ -47,6 +47,7 @@ public class DBhelper {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    return code;}
+        return code;
+    }
 
 }

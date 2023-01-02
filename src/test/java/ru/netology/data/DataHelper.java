@@ -18,19 +18,19 @@ public class DataHelper {
         String login = faker.name().username();
         String password = "$2a$10$7yHUvStzBubZ1s7kZrwYGujHyNzGt5rmv29o.vgNBkqwQ.5bzKH9i";
         String status = "active";
-        String[] userParams= {id, login, password, status};
+        String[] userParams = {id, login, password, status};
         queryUpdate(dataSQL, userParams);
         return new User(id, login, "qwerty123", status);
     }
 
-    public static User getUserInDBwrongLogin(){
+    public static User getUserInDBwrongLogin() {
         var faker = new Faker();
         var dataSQL = "INSERT INTO users(id, login, password, status) VALUES (?, ?,?,?);";
         String id = faker.regexify("[0-9]{10}");
         String login = faker.name().username();
         String password = "$2a$10$7yHUvStzBubZ1s7kZrwYGujHyNzGt5rmv29o.vgNBkqwQ.5bzKH9i";
         String status = "active";
-        String[] userParams= {id, login, password, status};
+        String[] userParams = {id, login, password, status};
         queryUpdate(dataSQL, userParams);
         return new User(id, faker.regexify("[0-9]{10}"), "qwerty123", status);
     }
@@ -42,7 +42,7 @@ public class DataHelper {
         String login = faker.name().username();
         String password = "$2a$10$7yHUvStzBubZ1s7kZrwYGujHyNzGt5rmv29o.vgNBkqwQ.5bzKH9i";
         String status = "active";
-        String[] userParams= {id, login, password, status};
+        String[] userParams = {id, login, password, status};
         queryUpdate(dataSQL, userParams);
         return new User(id, login, faker.regexify("[0-9]{10}"), status);
     }

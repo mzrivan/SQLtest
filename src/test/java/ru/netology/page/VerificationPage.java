@@ -19,7 +19,7 @@ public class VerificationPage {
         codeField.shouldBe(visible);
     }
 
-    public void validCodeVerify(User user){
+    public void validCodeVerify(User user) {
         codeField.setValue(getVerificationCode(user));
         verifyButton.click();
         new DashboardPage();
